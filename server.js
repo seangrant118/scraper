@@ -2,13 +2,7 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
-const axios = require("axios");
-const cheerio = require("cheerio");
 const exphbs = require("express-handlebars");
-
-// require models
-
-const db = require("./models");
 
 // PORT
 
@@ -36,10 +30,7 @@ mongoose.connect("mongodb://localhost/scraperhw", { useNewUrlParser: true});
 // Routes
 
 const routes = require("./controllers/controller")
-
 app.use(routes);
-
-
 
 // Start server
 
