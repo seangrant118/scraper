@@ -29,11 +29,21 @@ app.use(express.static("public"));
 app.engine("handlebars", exphbs({ defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 
+// Connect to MongoDB
+
+mongoose.connect("mongodb://localhost/scraperhw", { useNewUrlParser: true});
+
 // Routes
 
 const routes = require("./controllers/controller")
 
 app.use(routes);
 
-// 
+
+
+// Start server
+
+app.listen(PORT, function() {
+  console.log(`Server listening on :http://localhost:${PORT}`);
+})
 
