@@ -1,9 +1,13 @@
 const express = require("express");
-const app = express();
+// const app = express();
 const router = express.Router();
 const db = require("../models");
 const axios = require("axios");
 const cheerio = require("cheerio");
+
+// try and import mongo here 
+// const mongoose = require("mongoose")
+// mongoose.connect("mongodb://localhost/scraperhw", { useNewUrlParser: true});
 
 // Scrape Routes
 
@@ -11,8 +15,7 @@ router.get("/scrape", function(req, res) {
   
   // Grab html with axios
 
-  axios.get("https://old.reddit.com/r/programming/")
-    .then(function(response) {
+  axios.get("https://old.reddit.com/r/programming/").then(function(response) {
 
       // Load cheerio for $ selector
 
@@ -20,18 +23,18 @@ router.get("/scrape", function(req, res) {
 
       // Grab article information
 
-      $("div", ".top-matter").each(function(i, element) {
+      $("div.top-matter").each(function(i, element) {
 
         // save empty result object
-
         const result = {};
 
         // Add important info to result object
 
-        result.title = $(this).children("a", ".title").text();
-        result.link = $(this).children("a", ".title").attr("href");
+        result.title = $(element).find("a.title").text();
+        result.link = $(element).find("a.title").attr("href");
+        console.log(result);
 
-        // create new object in db using result object
+        // create new doc in db using result object
 
         db.Article.create(result)
           .then(function(dbArticle) {
