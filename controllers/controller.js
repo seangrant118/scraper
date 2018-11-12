@@ -50,4 +50,57 @@ router.get("/scrape", function(req, res) {
     })
 })
 
+//json article data
+
+router.get("/articles", function(req, res) {
+  db.Article.find({}).then(function(dbArticle) {
+    res.json(dbArticle);
+  }).catch(function(err) {
+    res.json(err);
+  }) 
+})
+
+// Main page
+
+router.get("/", function(req, res) {
+  db.Article.find({}).then(function(dbArticle) {
+    const hbsObject = {
+      article: dbArticle
+    };
+    res.render("index", hbsObject)
+  })
+})
+
+// grab article by id
+
+router.get("/articles/:id", function(req, res) {
+
+    // use req.params.id to find article
+
+    db.Article.findOne({_id: req.params.id}).populate("note")
+    .then(function(dbArticle) {
+      res.json(dbArticle)
+    }).catch(function(err) {
+      res.json(err);
+    })
+})
+
+// Save articles associated note
+
+router.post("/articles/:id", function(req, res) {
+  db.Note.create(req.body).then(function(dbNote) {
+    return db.Article.findOneAndUpdate({
+      _id: req.params.id
+    }, {
+      note: dbNote._id
+    }, {
+      new: true
+    })
+  }).then(function(dbArticle) {
+    res.json(dbArticle)
+  }).catch(function(err) {
+    res.json(err)
+  })
+})
+
 module.exports = router;
