@@ -10,10 +10,10 @@ $(document).on("click", "li", function() {
   }).then(function(data) {
     console.log(data)
     $("#notes").append("<div class='row'>")
-    $("#notes").append("<h2 class='col-12'>" + data.title + "</h2>");
-    $("#notes").append("<input class='col-12' id='titleinput' name='title' >");
-    $("#notes").append("<textarea class='col-12' id='bodyinput' name='body'></textarea>");
-    $("#notes").append("<button class='button col-12' data-id='" + data._id + "' id='savenote'>Save Note</button>");
+    $("#notes").append("<h2 class='col-md-12'>" + data.title + "</h2>");
+    $("#notes").append("<input class='col-md-12' id='titleinput' name='title' >");
+    $("#notes").append("<textarea class='col-md-12' id='bodyinput' name='body'></textarea>");
+    $("#notes").append("<button class='button col-md-12' data-id='" + data._id + "' id='savenote'>Save Note</button>");
     $("#notes").append("</div>")
 
     // if theres a note
